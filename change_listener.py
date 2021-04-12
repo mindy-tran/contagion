@@ -9,6 +9,7 @@ import logging
 logging.basicConfig()
 log = logging.getLogger("__name__")
 
+
 class ChangeListener(mvc.Listener):
     """Detect changes in the population"""
 
@@ -29,4 +30,3 @@ class ChangeListener(mvc.Listener):
             log.debug("State change")
         else:
             log.warning(f"ChangeListener does not handle event type '{event}'")
-

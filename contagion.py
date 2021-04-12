@@ -12,7 +12,8 @@ import argparse
 import logging
 logging.basicConfig()
 log = logging.getLogger(__name__)
-log.setLevel(logging.INFO)
+log.setLevel(logging.WARN)
+
 
 def cli() -> object:
     """Command line interface returns an object with
@@ -25,20 +26,19 @@ def cli() -> object:
     return parser.parse_args()
 
 
-
 def main():
     """View a simulation of contagion"""
     args = cli()
     config.configure(args.conf)
-    nrows = config.get_int("Grid", "rows")
-    ncols = config.get_int("Grid", "cols")
+    n_rows = config.get_int("Grid", "rows")
+    n_cols = config.get_int("Grid", "cols")
 
-    population = model.Population(nrows, ncols)
+    population = model.Population(n_rows, n_cols)
 
     # View of the main model
     view = grid_view.GridView(config.get_int("Grid", "Width"),
                               config.get_int("Grid", "Height"),
-                              nrows=nrows, ncols=ncols,
+                              nrows=n_rows, ncols=n_cols,
                               title="Contagion", autoflush=False)
 
     # Summary statistics
@@ -49,8 +49,8 @@ def main():
     #    - for updating the main view
     monitor = change_listener.ChangeListener()
     # Attach listeners to each cell
-    for row in range(nrows):
-        for col in range(ncols):
+    for row in range(n_rows):
+        for col in range(n_cols):
             cell_view = grid_view.CellView(row, col, view)
             population.cells[row][col].add_listener(cell_view)  # Graphics
             population.cells[row][col].add_listener(monitor)    # Change tracking
@@ -88,7 +88,8 @@ def main():
     # Simulation is no longer changing.  Leave view open
     # until the user presses enter
     stats_view.show_summary()
-    i = input("Press enter to close")
+    _ = input("Press enter to close")
+
 
 if __name__ == "__main__":
     main()

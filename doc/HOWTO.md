@@ -476,7 +476,7 @@ this section of file `minimal.ini`:
 [Typical]
 P_Death = 0.001  # 0.1% chance of dying on a single day
 Visit_Dist = 1   # Visit up to n steps away
-N_Visits = 1
+P_Visit = 1.0
 N_Neighbors = 2  # How many neighbors do I visit over time
 P_Greet = 1.0   # Welcome most visitors
 ```
@@ -831,7 +831,7 @@ We'll break down the social behavior of individual *K* as follows:
     ill, with some probability (`P_Transmit`), the infection spreads
     to the other. 
     
-We'll work backward through this chain of events.  The `visit` method 
+We'll work backward through this chain of events.  The `meet` method 
 is the same for all kinds of individuals, so we can put it in the 
 `Individual` base class.  It is possible that *M* spreads infection to 
 *K*, but also possible that *K* spreads infection to *M*.  To avoid 
@@ -907,6 +907,16 @@ Finally we are ready to implement the `social behavior` method
 of each individual. When a typical individual makes a visit 
 (at most one each day), they simply choose a neighbor at random: 
 
+```python
+    def social_behavior(self):
+        """A typical individual visits neighbors at random"""
+        if random.random() < self.P_Visit:
+            addr = random.choice(self.neighbors)
+            neighbor = self.region.visit(addr)
+            if neighbor.hello(self):
+                neighbor.meet(self)
+```
+
 At at-risk individual may be more cautious.  Not only do they 
 make fewer visits, to fewer people, but they try to visit the 
 same people repeatedly.  The at-risk individual will keep a record
@@ -959,4 +969,8 @@ You will turn in both `model.py` and the accompanying `contagion.ini`
 configuration file with configuration for your new `Wanderer` class 
 of individual.  Make sure you have observed behavior of your 
 `Wanderer` class in the simulation; this will require changes to 
-both files. 
+both files.  You will also turn in `contagion.png`, 
+a screen-shot of the display produced by your model running with the
+provided configuration file.  Use any screen-capture software to
+obtain it from your display, but be sure to convert to the 
+portable network graphics (PNG) format to turn in.  
