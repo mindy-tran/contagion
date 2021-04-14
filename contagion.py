@@ -12,7 +12,7 @@ import argparse
 import logging
 logging.basicConfig()
 log = logging.getLogger(__name__)
-log.setLevel(logging.WARN)
+log.setLevel(logging.INFO)
 
 
 def cli() -> object:
@@ -30,15 +30,15 @@ def main():
     """View a simulation of contagion"""
     args = cli()
     config.configure(args.conf)
-    n_rows = config.get_int("Grid", "rows")
-    n_cols = config.get_int("Grid", "cols")
+    nrows = config.get_int("Grid", "rows")
+    ncols = config.get_int("Grid", "cols")
 
-    population = model.Population(n_rows, n_cols)
+    population = model.Population(nrows, ncols)
 
     # View of the main model
     view = grid_view.GridView(config.get_int("Grid", "Width"),
                               config.get_int("Grid", "Height"),
-                              nrows=n_rows, ncols=n_cols,
+                              nrows=nrows, ncols=ncols,
                               title="Contagion", autoflush=False)
 
     # Summary statistics
@@ -49,8 +49,8 @@ def main():
     #    - for updating the main view
     monitor = change_listener.ChangeListener()
     # Attach listeners to each cell
-    for row in range(n_rows):
-        for col in range(n_cols):
+    for row in range(nrows):
+        for col in range(ncols):
             cell_view = grid_view.CellView(row, col, view)
             population.cells[row][col].add_listener(cell_view)  # Graphics
             population.cells[row][col].add_listener(monitor)    # Change tracking
@@ -68,6 +68,7 @@ def main():
     log.info("Running")
     steps = 0
     epoch = 0
+    monitor.set(True)
     while monitor.check():
         monitor.set(False)  # No changes yet in this cycle
         # An 'epoch' is 10 steps.  We stop when an epoch has
@@ -88,7 +89,7 @@ def main():
     # Simulation is no longer changing.  Leave view open
     # until the user presses enter
     stats_view.show_summary()
-    _ = input("Press enter to close")
+    i = input("Press enter to close")
 
 
 if __name__ == "__main__":
