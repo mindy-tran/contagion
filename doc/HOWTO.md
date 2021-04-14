@@ -831,7 +831,7 @@ We'll break down the social behavior of individual *K* as follows:
     ill, with some probability (`P_Transmit`), the infection spreads
     to the other. 
     
-We'll work backward through this chain of events.  The `visit` method 
+We'll work backward through this chain of events.  The `meet` method 
 is the same for all kinds of individuals, so we can put it in the 
 `Individual` base class.  It is possible that *M* spreads infection to 
 *K*, but also possible that *K* spreads infection to *M*.  To avoid 
