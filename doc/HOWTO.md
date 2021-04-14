@@ -907,6 +907,16 @@ Finally we are ready to implement the `social behavior` method
 of each individual. When a typical individual makes a visit 
 (at most one each day), they simply choose a neighbor at random: 
 
+```python
+    def social_behavior(self):
+        """A typical individual visits neighbors at random"""
+        if random.random() < self.P_Visit:
+            addr = random.choice(self.neighbors)
+            neighbor = self.region.visit(addr)
+            if neighbor.hello(self):
+                neighbor.meet(self)
+```
+
 At at-risk individual may be more cautious.  Not only do they 
 make fewer visits, to fewer people, but they try to visit the 
 same people repeatedly.  The at-risk individual will keep a record
