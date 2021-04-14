@@ -969,4 +969,8 @@ You will turn in both `model.py` and the accompanying `contagion.ini`
 configuration file with configuration for your new `Wanderer` class 
 of individual.  Make sure you have observed behavior of your 
 `Wanderer` class in the simulation; this will require changes to 
-both files. 
+both files.  You will also turn in `contagion.png`, 
+a screen-shot of the display produced by your model running with the
+provided configuration file.  Use any screen-capture software to
+obtain it from your display, but be sure to convert to the 
+portable network graphics (PNG) format to turn in.  
