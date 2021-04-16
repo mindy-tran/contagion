@@ -462,7 +462,7 @@ class Individual(mvc.Listenable):
         self.P_Death = config.get_float(kind, "P_Death")
         self.P_Greet = config.get_float(kind, "P_Greet")
         self.N_Neighbors = config.get_int(kind, "N_Neighbors")
-        self.N_Visits = config.get_float(kind, "N_Visits")
+        self.P_Visit = config.get_float(kind, "P_Visit")
         self.Visit_Dist = config.get_int(kind, "Visit_Dist")
 ```
 We haven't written the code that uses all these parameters yet,
@@ -475,10 +475,10 @@ this section of file `minimal.ini`:
 ```ini
 [Typical]
 P_Death = 0.001  # 0.1% chance of dying on a single day
-Visit_Dist = 1   # Visit up to n steps away
-P_Visit = 1.0
-N_Neighbors = 2  # How many neighbors do I visit over time
-P_Greet = 1.0   # Welcome most visitors
+Visit_Dist = 2   # Visit up to n steps away
+P_Visit = 0.5
+N_Neighbors = 3  # How many neighbors do I visit over time
+P_Greet = 0.85   # Welcome most visitors
 ```
 
 For the moment we will let `Population` make all the cells be of 
