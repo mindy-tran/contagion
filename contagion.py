@@ -68,7 +68,6 @@ def main():
     log.info("Running")
     steps = 0
     epoch = 0
-    monitor.set(True)
     while monitor.check():
         monitor.set(False)  # No changes yet in this cycle
         # An 'epoch' is 10 steps.  We stop when an epoch has
